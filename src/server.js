@@ -1,12 +1,13 @@
 //-----------------------------REQUIRE---------------------//
 
 const express = require('express');
+const sqliteConnection = require('./database/knex')
 const app = express();
 app.use(express.json());
 
 
 //-----------------------------INIT------------------------//
-
+sqliteConnection()
 
 
 
