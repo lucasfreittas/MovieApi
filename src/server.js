@@ -1,14 +1,17 @@
 //-----------------------------REQUIRE---------------------//
 
-const express = require('express');
+require('express-async-errors');
 const sqliteConnection = require('./database/knex')
+const AppError = require('./utils/AppError')
+const express = require('express');
 const routes = require('./routes')
+sqliteConnection()
 const app = express();
 app.use(express.json());
 
 
 //-----------------------------INIT------------------------//
-sqliteConnection()
+
 app.use(routes);
 
 app.use((error, request, response, next) => {
@@ -19,7 +22,7 @@ app.use((error, request, response, next) => {
         message: error.message
     });
 }
-    console.error(error.message);
+    console.error(error);
 
     return response.status(500).json({
         status: "error",
@@ -32,3 +35,4 @@ app.use((error, request, response, next) => {
 //-----------------------------PORT------------------------//
 const PORT = 3333;
 app.listen(PORT, () => {console.log(`Express is runing on PORT ${PORT}`)})
+
